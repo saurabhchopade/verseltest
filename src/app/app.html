@@ -1,181 +1,643 @@
-<style>
-  :host {
-    --bg: #0f172a;
-    --panel: #020617;
-    --muted: #94a3b8;
-    --accent: #38bdf8;
-    --accent-2: #6366f1;
-
-    font-family: Inter, system-ui, sans-serif;
-  }
-
-  .dashboard {
-    min-height: 100vh;
-    background: var(--bg);
-    color: white;
-    display: flex;
-  }
-
-  /* Sidebar */
-  .sidebar {
-    width: 240px;
-    background: var(--panel);
-    padding: 1.5rem;
-  }
-
-  .logo {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    color: var(--accent);
-  }
-
-  .nav a {
-    display: block;
-    padding: 0.75rem 1rem;
-    border-radius: 10px;
-    color: var(--muted);
-    text-decoration: none;
-    margin-bottom: 0.4rem;
-  }
-
-  .nav a.active,
-  .nav a:hover {
-    background: #1e293b;
-    color: var(--accent);
-  }
-
-  /* Main */
-  .main {
-    flex: 1;
-    padding: 2rem;
-  }
-
-  .topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-  }
-
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  }
-
-  /* Cards */
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .card {
-    background: var(--panel);
-    padding: 1.5rem;
-    border-radius: 16px;
-  }
-
-  .card h3 {
-    font-size: 0.85rem;
-    color: var(--muted);
-  }
-
-  .card p {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-top: 0.5rem;
-  }
-
-  /* Chart */
-  .chart {
-    background: var(--panel);
-    border-radius: 16px;
-    padding: 1.5rem;
-  }
-
-  .bars {
-    display: flex;
-    gap: 1rem;
-    height: 160px;
-    margin-top: 1.5rem;
-    align-items: flex-end;
-  }
-
-  .bar {
-    flex: 1;
-    border-radius: 6px;
-    background: linear-gradient(180deg, var(--accent), var(--accent-2));
-  }
-
-  .b1 { height: 40%; }
-  .b2 { height: 70%; }
-  .b3 { height: 55%; }
-  .b4 { height: 85%; }
-  .b5 { height: 65%; }
-
-  @media (max-width: 768px) {
-    .sidebar {
-      display: none;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rutuja Café - Aesthetic Café in Pune</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-  }
-</style>
 
-<div class="dashboard">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="logo">🚀 Versel</div>
-    <nav class="nav">
-      <a class="active">Dashboard</a>
-      <a>Analytics</a>
-      <a>Projects</a>
-      <a>Users</a>
-      <a>Settings</a>
-    </nav>
-  </aside>
+    body {
+      font-family: 'Georgia', serif;
+      overflow-x: hidden;
+      background: #faf8f5;
+      color: #2d2d2d;
+    }
 
-  <!-- Main -->
-  <section class="main">
-    <div class="topbar">
-      <h1>Welcome, {{ title() }}</h1>
-      <div class="avatar"></div>
+    /* Smooth Scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(250, 248, 245, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(139, 99, 76, 0.1);
+      animation: slideDown 0.8s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #8b634c;
+      font-family: 'Brush Script MT', cursive;
+      animation: fadeIn 1s ease-in;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #2d2d2d;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #8b634c;
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a:hover {
+      color: #8b634c;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #faf8f5 0%, #f4ebe4 100%);
+    }
+
+    .hero-content {
+      text-align: center;
+      z-index: 2;
+      animation: fadeInUp 1.2s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero h1 {
+      font-size: 5rem;
+      color: #8b634c;
+      margin-bottom: 1rem;
+      font-family: 'Brush Script MT', cursive;
+      animation: fadeInUp 1s ease-out 0.2s both;
+    }
+
+    .hero h2 {
+      font-size: 1.8rem;
+      color: #5d4e37;
+      margin-bottom: 2rem;
+      font-weight: 300;
+      letter-spacing: 3px;
+      animation: fadeInUp 1s ease-out 0.4s both;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 3rem;
+      animation: fadeInUp 1s ease-out 0.6s both;
+    }
+
+    .cta-button {
+      background: #8b634c;
+      color: white;
+      padding: 1.2rem 3rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.4s;
+      box-shadow: 0 10px 30px rgba(139, 99, 76, 0.3);
+      animation: fadeInUp 1s ease-out 0.8s both;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(139, 99, 76, 0.4);
+      background: #6f4e3a;
+    }
+
+    /* Floating Coffee Beans */
+    .floating-element {
+      position: absolute;
+      font-size: 3rem;
+      opacity: 0.1;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-30px) rotate(10deg);
+      }
+    }
+
+    .bean1 { top: 15%; left: 10%; animation-delay: 0s; }
+    .bean2 { top: 70%; left: 85%; animation-delay: 1s; }
+    .bean3 { top: 30%; right: 15%; animation-delay: 2s; }
+    .bean4 { bottom: 20%; left: 20%; animation-delay: 3s; }
+
+    /* About Section */
+    .about {
+      padding: 8rem 5%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      background: #fff;
+    }
+
+    .about-content {
+      animation: fadeInLeft 1s ease-out;
+    }
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .about-content h2 {
+      font-size: 3.5rem;
+      color: #8b634c;
+      margin-bottom: 2rem;
+      font-family: 'Brush Script MT', cursive;
+    }
+
+    .about-content p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-image {
+      position: relative;
+      height: 500px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      animation: fadeInRight 1s ease-out;
+    }
+
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .about-image::before {
+      content: '☕';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 15rem;
+      opacity: 0.1;
+      animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Menu Section */
+    .menu {
+      padding: 8rem 5%;
+      background: linear-gradient(135deg, #faf8f5 0%, #f4ebe4 100%);
+    }
+
+    .menu h2 {
+      text-align: center;
+      font-size: 3.5rem;
+      color: #8b634c;
+      margin-bottom: 4rem;
+      font-family: 'Brush Script MT', cursive;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .menu-item {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      text-align: center;
+      transition: all 0.4s;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      animation: scaleIn 0.6s ease-out both;
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .menu-item:nth-child(1) { animation-delay: 0.1s; }
+    .menu-item:nth-child(2) { animation-delay: 0.2s; }
+    .menu-item:nth-child(3) { animation-delay: 0.3s; }
+    .menu-item:nth-child(4) { animation-delay: 0.4s; }
+
+    .menu-item:hover {
+      transform: translateY(-15px) rotate(2deg);
+      box-shadow: 0 20px 50px rgba(139, 99, 76, 0.2);
+    }
+
+    .menu-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .menu-item h3 {
+      font-size: 1.8rem;
+      color: #8b634c;
+      margin-bottom: 1rem;
+    }
+
+    .menu-item p {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .price {
+      font-size: 1.5rem;
+      color: #8b634c;
+      font-weight: bold;
+    }
+
+    /* Gallery Section */
+    .gallery {
+      padding: 8rem 5%;
+      background: #fff;
+    }
+
+    .gallery h2 {
+      text-align: center;
+      font-size: 3.5rem;
+      color: #8b634c;
+      margin-bottom: 4rem;
+      font-family: 'Brush Script MT', cursive;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gallery-item {
+      height: 300px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.4s;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(139, 99, 76, 0.8), rgba(93, 78, 55, 0.8));
+      opacity: 0;
+      transition: opacity 0.4s;
+      z-index: 1;
+    }
+
+    .gallery-item:hover::before {
+      opacity: 1;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+    }
+
+    .gallery-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      background: linear-gradient(135deg, #f4ebe4, #e8ddd1);
+    }
+
+    /* Contact Section */
+    .contact {
+      padding: 8rem 5%;
+      background: linear-gradient(135deg, #8b634c 0%, #6f4e3a 100%);
+      color: white;
+      text-align: center;
+    }
+
+    .contact h2 {
+      font-size: 3.5rem;
+      margin-bottom: 2rem;
+      font-family: 'Brush Script MT', cursive;
+    }
+
+    .contact p {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item {
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .contact-item span {
+      font-size: 1.5rem;
+    }
+
+    /* Footer */
+    footer {
+      background: #2d2d2d;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    /* Scroll Animation */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease-out;
+    }
+
+    .scroll-reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 3rem; }
+      .hero h2 { font-size: 1.2rem; }
+      .about { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .about-content h2,
+      .menu h2,
+      .gallery h2,
+      .contact h2 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">Rutuja Café</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="floating-element bean1">☕</div>
+    <div class="floating-element bean2">🥐</div>
+    <div class="floating-element bean3">🍰</div>
+    <div class="floating-element bean4">☕</div>
+    
+    <div class="hero-content">
+      <h1>Rutuja Café</h1>
+      <h2>AESTHETIC CAFÉ IN PUNE</h2>
+      <p>Where Coffee Meets Creativity</p>
+      <a href="#menu" class="cta-button">Explore Menu</a>
     </div>
+  </section>
 
-    <!-- Stats -->
-    <div class="cards">
-      <div class="card">
-        <h3>Total Users</h3>
-        <p>12,480</p>
-      </div>
-      <div class="card">
-        <h3>Revenue</h3>
-        <p>$84,210</p>
-      </div>
-      <div class="card">
-        <h3>Deployments</h3>
-        <p>326</p>
-      </div>
-      <div class="card">
-        <h3>Errors</h3>
-        <p>12</p>
-      </div>
+  <!-- About Section -->
+  <section id="about" class="about scroll-reveal">
+    <div class="about-content">
+      <h2>Our Story</h2>
+      <p>Welcome to Rutuja Café, Pune's most aesthetic coffee destination where every sip tells a story and every corner is Instagram-worthy.</p>
+      <p>We blend the finest coffee beans with artistic ambiance, creating a sanctuary for coffee lovers, dreamers, and creatives alike.</p>
+      <p>Our carefully curated space combines vintage charm with modern aesthetics, making every visit a memorable experience.</p>
     </div>
+    <div class="about-image"></div>
+  </section>
 
-    <!-- Chart -->
-    <div class="chart">
-      <h3>Weekly Activity</h3>
-      <div class="bars">
-        <div class="bar b1"></div>
-        <div class="bar b2"></div>
-        <div class="bar b3"></div>
-        <div class="bar b4"></div>
-        <div class="bar b5"></div>
+  <!-- Menu Section -->
+  <section id="menu" class="menu scroll-reveal">
+    <h2>Our Specialties</h2>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-icon">☕</div>
+        <h3>Signature Latte</h3>
+        <p>Velvety smooth espresso with perfectly steamed milk and latte art</p>
+        <div class="price">₹180</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-icon">🥐</div>
+        <h3>Fresh Croissants</h3>
+        <p>Buttery, flaky pastries baked fresh every morning</p>
+        <div class="price">₹120</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-icon">🍰</div>
+        <h3>Chocolate Cake</h3>
+        <p>Rich, decadent layers of pure chocolate bliss</p>
+        <div class="price">₹160</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-icon">🧋</div>
+        <h3>Cold Brew</h3>
+        <p>Smooth, refreshing coffee steeped for 12 hours</p>
+        <div class="price">₹200</div>
       </div>
     </div>
   </section>
-</div>
 
-<router-outlet />
+  <!-- Gallery Section -->
+  <section id="gallery" class="gallery scroll-reveal">
+    <h2>Our Aesthetic Space</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <div class="gallery-placeholder">☕</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder">🪴</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder">📚</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder">🎨</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder">🕯️</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder">🌿</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <h2>Visit Us</h2>
+    <p>Experience the perfect blend of coffee and aesthetics</p>
+    <div class="contact-info">
+      <div class="contact-item">
+        <span>📍</span>
+        <div>Koregaon Park, Pune, Maharashtra</div>
+      </div>
+      <div class="contact-item">
+        <span>📞</span>
+        <div>+91 98765 43210</div>
+      </div>
+      <div class="contact-item">
+        <span>⏰</span>
+        <div>Open Daily: 8 AM - 11 PM</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Rutuja Café. Crafted with ❤️ in Pune</p>
+  </footer>
+
+  <script>
+    // Scroll Reveal Animation
+    const reveals = document.querySelectorAll('.scroll-reveal');
+    
+    function checkScroll() {
+      reveals.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (elementTop < windowHeight - 100) {
+          element.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', checkScroll);
+    checkScroll();
+
+    // Smooth scroll for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
