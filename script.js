@@ -700,10 +700,6 @@ async function chooseAiMoveAsync(s, token) {
     bestMove = result.move || bestMove;
     bestScore = result.score;
 
-    if (depth >= 2) {
-      state.status = `Black (${cfg.label}) thinking... depth ${depth}`;
-      render();
-    }
     await new Promise((resolve) => setTimeout(resolve, 0));
   }
 
