@@ -9,22 +9,14 @@
 <body>
   <main class="app">
     <section class="panel top-panel">
-      <h1>Offline Chess</h1>
-      <p class="subtitle">Human (White) vs Computer (Black)</p>
-      <div class="status-row">
-        <div><strong>Turn:</strong> <span id="turnLabel">White</span></div>
-        <div><strong>Level:</strong> <span id="levelLabel">Medium</span></div>
-        <div><strong>Status:</strong> <span id="statusLabel">White to move</span></div>
-      </div>
-      <div class="advantage-wrap">
-        <div class="advantage-labels">
-          <span id="whiteWinPct">White 50%</span>
-          <span id="blackWinPct">Black 50%</span>
-        </div>
-        <div class="advantage-bar" aria-label="Winning chance bar">
-          <div id="whiteAdvFill" class="advantage-fill"></div>
+      <div class="top-head">
+        <h1>Offline Chess</h1>
+        <div class="status-row">
+          <div class="meta-pill"><span class="meta-key">Turn</span><span id="turnLabel">White</span></div>
+          <div class="meta-pill"><span class="meta-key">Level</span><span id="levelLabel">Medium</span></div>
         </div>
       </div>
+      <p class="sr-only">Status: <span id="statusLabel">White to move</span></p>
       <div class="clock-row">
         <div class="clock-card" id="whiteClockCard">
           <span class="clock-name">White</span>
@@ -43,27 +35,41 @@
       </div>
 
       <aside class="side-panel">
-        <div class="control-group">
-          <label for="levelSelect">AI Level</label>
-          <select id="levelSelect" class="input">
-            <option value="easy">Easy</option>
-            <option value="medium" selected>Medium</option>
-            <option value="hard">Hard</option>
-          </select>
+        <div class="controls-grid">
+          <div class="control-group">
+            <label for="levelSelect">Difficulty</label>
+            <select id="levelSelect" class="input">
+              <option value="easy">Easy</option>
+              <option value="medium" selected>Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="timeSelect">Time</label>
+            <select id="timeSelect" class="input">
+              <option value="120">2 Minutes</option>
+              <option value="180">3 Minutes</option>
+              <option value="300" selected>5 Minutes</option>
+              <option value="600">10 Minutes</option>
+            </select>
+          </div>
         </div>
 
-        <div class="control-group">
-          <label for="timeSelect">Time Control</label>
-          <select id="timeSelect" class="input">
-            <option value="120">2 Minutes</option>
-            <option value="180">3 Minutes</option>
-            <option value="300" selected>5 Minutes</option>
-            <option value="600">10 Minutes</option>
-          </select>
+        <div class="actions-row">
+          <button id="newGameBtn" class="btn btn-primary">New Game</button>
+          <button id="resignBtn" class="btn btn-danger">Resign</button>
         </div>
 
-        <button id="newGameBtn" class="btn">New Game</button>
-        <button id="resignBtn" class="btn btn-danger">Resign</button>
+        <div class="advantage-wrap">
+          <div class="advantage-labels">
+            <span id="whiteWinPct">White 50%</span>
+            <span id="blackWinPct">Black 50%</span>
+          </div>
+          <div class="advantage-bar" aria-label="Winning chance bar">
+            <div id="whiteAdvFill" class="advantage-fill"></div>
+          </div>
+        </div>
 
         <div class="capture-block">
           <h2>Captured by White</h2>
