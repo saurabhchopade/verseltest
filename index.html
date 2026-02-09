@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offline Chess</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="panel top-panel">
+      <h1>Offline Chess</h1>
+      <p class="subtitle">Human (White) vs Computer (Black)</p>
+      <div class="status-row">
+        <div><strong>Turn:</strong> <span id="turnLabel">White</span></div>
+        <div><strong>Level:</strong> <span id="levelLabel">Medium</span></div>
+        <div><strong>Status:</strong> <span id="statusLabel">White to move</span></div>
+      </div>
+      <div class="advantage-wrap">
+        <div class="advantage-labels">
+          <span id="whiteWinPct">White 50%</span>
+          <span id="blackWinPct">Black 50%</span>
+        </div>
+        <div class="advantage-bar" aria-label="Winning chance bar">
+          <div id="whiteAdvFill" class="advantage-fill"></div>
+        </div>
+      </div>
+      <div class="clock-row">
+        <div class="clock-card" id="whiteClockCard">
+          <span class="clock-name">White</span>
+          <span id="whiteClock" class="clock-time">05:00</span>
+        </div>
+        <div class="clock-card" id="blackClockCard">
+          <span class="clock-name">Black</span>
+          <span id="blackClock" class="clock-time">05:00</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="game-area">
+      <div class="board-wrap">
+        <div id="board" class="board" aria-label="Chess board"></div>
+      </div>
+
+      <aside class="side-panel">
+        <div class="control-group">
+          <label for="levelSelect">AI Level</label>
+          <select id="levelSelect" class="input">
+            <option value="easy">Easy</option>
+            <option value="medium" selected>Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label for="timeSelect">Time Control</label>
+          <select id="timeSelect" class="input">
+            <option value="120">2 Minutes</option>
+            <option value="180">3 Minutes</option>
+            <option value="300" selected>5 Minutes</option>
+            <option value="600">10 Minutes</option>
+          </select>
+        </div>
+
+        <button id="newGameBtn" class="btn">New Game</button>
+        <button id="resignBtn" class="btn btn-danger">Resign</button>
+
+        <div class="capture-block">
+          <h2>Captured by White</h2>
+          <div id="capturedByWhite" class="captured-list"></div>
+        </div>
+
+        <div class="capture-block">
+          <h2>Captured by Black</h2>
+          <div id="capturedByBlack" class="captured-list"></div>
+        </div>
+
+        <div class="legend">
+          <h2>Tips</h2>
+          <ul>
+            <li>Click a white piece to select.</li>
+            <li>Click a highlighted square to move.</li>
+            <li>Black moves automatically.</li>
+          </ul>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <div id="gameOverModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h2 id="modalTitle">Game Over</h2>
+      <p id="modalText">Result</p>
+      <div class="modal-actions">
+        <button id="modalNewGameBtn" class="btn">Play Again</button>
+        <button id="modalCloseBtn" class="btn btn-danger">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
